@@ -1,4 +1,5 @@
 
+import expression.Expression;
 import expression.LogicalExpression;
 import inference.InferenceEngine;
 import inference.InferenceEngineImpl;
@@ -16,30 +17,24 @@ public class Main {
             new Resolution()
         );
 
-        System.out.println(inferenceEngine.applyRules(
-                new LogicalExpression("p > q"),
-                new LogicalExpression("p")
-        ).getRepresentation()); // q
+        Expression result;
 
-        System.out.println(inferenceEngine.applyRules(
-                new LogicalExpression("p > q"),
-                new LogicalExpression("~q")
-        ).getRepresentation()); // ~p
 
-        System.out.println(inferenceEngine.applyRules(
-                new LogicalExpression("p > q"),
-                new LogicalExpression("q > r")
-        ).getRepresentation()); // p > r
+        result = inferenceEngine.applyRules(new LogicalExpression("~p > ~q"), new LogicalExpression("~p"));
+        System.out.println(result != null ? result.getRepresentation() : "Invalid inference rule");
 
-        System.out.println(inferenceEngine.applyRules(
-                new LogicalExpression("p v q"),
-                new LogicalExpression("~p")
-        ).getRepresentation()); // q
+        result = inferenceEngine.applyRules(new LogicalExpression("p > q"), new LogicalExpression("~q"));
+        System.out.println(result != null ? result.getRepresentation() : "Invalid inference rule");
 
-        System.out.println(inferenceEngine.applyRules(
-                new LogicalExpression("p v q"),
-                new LogicalExpression("~p v r")
-        ).getRepresentation()); // q v r
+        result = inferenceEngine.applyRules(new LogicalExpression("p > q"), new LogicalExpression("q > r"));
+        System.out.println(result != null ? result.getRepresentation() : "Invalid inference rule");
+
+        result = inferenceEngine.applyRules(new LogicalExpression("p v q"), new LogicalExpression("~p"));
+        System.out.println(result != null ? result.getRepresentation() : "Invalid inference rule");
+
+        result = inferenceEngine.applyRules(new LogicalExpression("p v q"), new LogicalExpression("~p v r"));
+        System.out.println(result != null ? result.getRepresentation() : "Invalid inference rule");
+
     }
 }
 
